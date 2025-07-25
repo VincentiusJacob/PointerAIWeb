@@ -1,6 +1,6 @@
 // app/subscribe/page.tsx
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -110,7 +110,7 @@ const paymentMethods = [
   { id: "ewallet", name: "E-Wallet", icon: null },
 ];
 
-export default function SubscribePage() {
+function SubscribeComponent() {
   const [selectedPlan, setSelectedPlan] = useState("");
   const [selectedPayment, setSelectedPayment] = useState("card");
   const [billingCycle, setBillingCycle] = useState("monthly");
@@ -587,5 +587,13 @@ export default function SubscribePage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function SubscribePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SubscribeComponent />
+    </Suspense>
   );
 }

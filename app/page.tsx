@@ -1,4 +1,3 @@
-// app/page.tsx - Landing Page
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -59,6 +58,7 @@ export default function LandingPage() {
   const [particlePositions, setParticlePositions] = useState<
     { x: number; y: number }[]
   >([]);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
@@ -69,47 +69,46 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      // Pastikan kode berjalan di browser
-      const positions = Array.from({ length: 20 }).map(() => ({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-      }));
-      setParticlePositions(positions);
-    }
+    setIsMounted(true);
+
+    // Logika yang sudah ada bisa digabung
+    setIsVisible(true);
+    const interval = setInterval(() => {
+      setCurrentFeature((prev) => (prev + 1) % features.length);
+    }, 4000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="h-screen relative overflow-hidden">
-      {/* Animated Background */}
       <div className="absolute inset-0 animated-grid opacity-30" />
       <div className="absolute inset-0 bg-gradient-to-br from-blue-1/10 via-transparent to-green-1/10" />
 
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-blue-4 rounded-full opacity-20"
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
-            }}
-            animate={{
-              y: [0, -100, 0],
-              x: [0, Math.random() * 100 - 50, 0],
-              opacity: [0.2, 0.8, 0.2],
-            }}
-            transition={{
-              duration: Math.random() * 10 + 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
+      {isMounted && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-blue-4 rounded-full opacity-20"
+              initial={{
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+              }}
+              animate={{
+                y: [0, -100, 0],
+                x: [0, Math.random() * 100 - 50, 0],
+                opacity: [0.2, 0.8, 0.2],
+              }}
+              transition={{
+                duration: Math.random() * 10 + 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </div>
+      )}
 
-      {/* Navigation */}
       <nav className="relative z-50 glass-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
@@ -148,7 +147,6 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="relative z-40 pt-20 pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -187,7 +185,6 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
-          {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -212,7 +209,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features Section */}
       <section id="features" className="relative z-40 py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -280,7 +276,6 @@ export default function LandingPage() {
             ))}
           </div>
 
-          {/* End-to-End Solution */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -347,7 +342,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* AI Chatbot Preview */}
       <section className="relative z-40 py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -491,7 +485,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="relative z-40 py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -525,7 +518,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="relative z-40 border-t border-palantir-dark-gray-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid md:grid-cols-4 gap-8">
