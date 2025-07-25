@@ -1,6 +1,7 @@
 "use client";
+
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import {
   ShieldCheckIcon,
@@ -11,9 +12,7 @@ import {
   EyeIcon,
   CpuChipIcon,
   LightBulbIcon,
-  CheckIcon,
 } from "@heroicons/react/24/outline";
-import "./globals.css";
 
 const features = [
   {
@@ -35,43 +34,47 @@ const features = [
     color: "blue",
   },
   {
-    icon: CurrencyDollarIcon,
-    title: "AutoBudgeting",
+    icon: SparklesIcon,
+    title: "End-to-End",
     description:
-      "Otomatisasi budgeting dengan rekomendasi cerdas dan optimisasi alokasi anggaran",
-    price: "Rp 2.800.000",
+      "Solusi lengkap dengan semua fitur AI, chatbot advanced, dan integrasi seamless",
+    price: "Rp 7.500.000",
     period: "/bulan",
     color: "green",
+    badge: "Save 25%",
   },
 ];
 
-const stats = [
-  { value: "99.8%", label: "Akurasi Deteksi Fraud" },
-  { value: "94.5%", label: "Akurasi Prediksi Sales" },
-  { value: "87%", label: "Efisiensi Budget" },
-  { value: "2.5x", label: "ROI Improvement" },
+const featureHighlights = [
+  {
+    icon: ChartBarIcon,
+    title: "Sales Forecasting",
+    description: "Prediksi akurat untuk planning bisnis",
+  },
+  {
+    icon: ShieldCheckIcon,
+    title: "Fraud Detection",
+    description: "Deteksi real-time untuk keamanan maksimal",
+  },
+  {
+    icon: CurrencyDollarIcon,
+    title: "Auto Budgeting",
+    description: "Otomatisasi cerdas untuk efisiensi optimal",
+  },
+  {
+    icon: CpuChipIcon,
+    title: "AI Chatbot",
+    description: "Assistant pintar untuk insights mendalam",
+  },
 ];
 
 export default function LandingPage() {
   const [currentFeature, setCurrentFeature] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [particlePositions, setParticlePositions] = useState<
-    { x: number; y: number }[]
-  >([]);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
-    const interval = setInterval(() => {
-      setCurrentFeature((prev) => (prev + 1) % features.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
     setIsMounted(true);
-
-    // Logika yang sudah ada bisa digabung
     setIsVisible(true);
     const interval = setInterval(() => {
       setCurrentFeature((prev) => (prev + 1) % features.length);
@@ -80,19 +83,25 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="h-screen relative overflow-hidden">
-      <div className="absolute inset-0 animated-grid opacity-30" />
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-1/10 via-transparent to-green-1/10" />
+    <div className="min-h-screen relative bg-palantir-dark-gray-1">
+      {/* Background Effects */}
+      <div className="fixed inset-0 animated-grid opacity-30" />
+      <div className="fixed inset-0 bg-gradient-to-br from-blue-1/10 via-transparent to-green-1/10" />
 
+      {/* Floating Particles */}
       {isMounted && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
           {[...Array(20)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-2 h-2 bg-blue-4 rounded-full opacity-20"
               initial={{
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
+                x:
+                  Math.random() *
+                  (typeof window !== "undefined" ? window.innerWidth : 1000),
+                y:
+                  Math.random() *
+                  (typeof window !== "undefined" ? window.innerHeight : 1000),
               }}
               animate={{
                 y: [0, -100, 0],
@@ -101,7 +110,7 @@ export default function LandingPage() {
               }}
               transition={{
                 duration: Math.random() * 10 + 5,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
               }}
             />
@@ -109,6 +118,7 @@ export default function LandingPage() {
         </div>
       )}
 
+      {/* Navigation */}
       <nav className="relative z-50 glass-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
@@ -124,7 +134,6 @@ export default function LandingPage() {
                 PointerAI
               </span>
             </motion.div>
-
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -147,6 +156,7 @@ export default function LandingPage() {
         </div>
       </nav>
 
+      {/* Hero Section */}
       <section className="relative z-40 pt-20 pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -159,13 +169,11 @@ export default function LandingPage() {
               <br />
               <span className="text-white">Redefined by AI</span>
             </h1>
-
             <p className="text-xl md:text-2xl text-palantir-gray-3 mb-12 max-w-4xl mx-auto leading-relaxed">
               Platform AI terdepan untuk deteksi fraud real-time, forecasting
               penjualan akurat, dan budgeting otomatis yang mengubah cara
               perusahaan mengelola data bisnis
             </p>
-
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Link
                 href="/register"
@@ -174,7 +182,6 @@ export default function LandingPage() {
                 <span>Mulai Sekarang</span>
                 <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-
               <Link
                 href="#demo"
                 className="btn-secondary px-8 py-4 rounded-xl font-semibold text-lg flex items-center space-x-2"
@@ -185,30 +192,37 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
+          {/* Feature Highlights */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24"
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-24"
           >
-            {stats.map((stat, index) => (
+            {featureHighlights.map((feature, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.6 + index * 0.1 }}
-                className="glass p-6 rounded-xl"
+                className="glass p-6 rounded-xl text-center group hover:scale-105 transition-transform duration-300"
               >
-                <div className="text-3xl md:text-4xl font-bold gradient-text mb-2">
-                  {stat.value}
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-4 to-green-3 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <feature.icon className="w-6 h-6 text-white" />
                 </div>
-                <div className="text-palantir-gray-4 text-sm">{stat.label}</div>
+                <h3 className="text-lg font-bold text-white mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-palantir-gray-4 text-sm">
+                  {feature.description}
+                </p>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
+      {/* Features Section */}
       <section id="features" className="relative z-40 py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -239,109 +253,61 @@ export default function LandingPage() {
                 transition={{ delay: index * 0.2, duration: 0.8 }}
                 className="group"
               >
-                <div className="dashboard-card p-8 rounded-2xl card-hover h-full">
+                <div className="dashboard-card p-8 rounded-2xl card-hover h-full flex flex-col">
                   <div
-                    className={`w-16 h-16 bg-gradient-to-br from-${feature.color}-3 to-${feature.color}-4 rounded-xl flex items-center justify-center mb-6 feature-icon`}
+                    className={`w-16 h-16 bg-gradient-to-br ${
+                      feature.color === "red"
+                        ? "from-red-3 to-red-4"
+                        : feature.color === "blue"
+                        ? "from-blue-3 to-blue-4"
+                        : "from-green-3 to-green-4"
+                    } rounded-xl flex items-center justify-center mb-6 feature-icon`}
                   >
                     <feature.icon className="w-8 h-8 text-white" />
                   </div>
-
                   <h3 className="text-2xl font-bold text-white mb-4">
                     {feature.title}
                   </h3>
-                  <p className="text-palantir-gray-3 mb-6 leading-relaxed">
+                  <p className="text-palantir-gray-3 mb-6 leading-relaxed flex-grow">
                     {feature.description}
                   </p>
 
-                  <div className="flex items-end justify-between">
-                    <div>
+                  {/* Price Section */}
+                  <div className="text-center mb-6">
+                    <div className="flex items-center justify-center space-x-2 mb-2">
                       <span className="text-3xl font-bold text-white">
                         {feature.price}
                       </span>
                       <span className="text-palantir-gray-4">
                         {feature.period}
                       </span>
+                      {feature.badge && (
+                        <div className="bg-green-3 text-white px-2 py-1 rounded-full text-xs font-medium">
+                          {feature.badge}
+                        </div>
+                      )}
                     </div>
-                    <Link
-                      href={`/subscribe?plan=${feature.title
-                        .toLowerCase()
-                        .replace(" ", "-")}`}
-                      className={`btn-primary px-6 py-3 rounded-lg font-medium text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0`}
-                    >
-                      Pilih Plan
-                    </Link>
                   </div>
+
+                  {/* Button */}
+                  <Link
+                    href={`/subscribe?plan=${feature.title
+                      .toLowerCase()
+                      .replace(" ", "-")}`}
+                    className="btn-primary px-6 py-3 rounded-lg font-medium text-white text-center transition-all duration-300 hover:scale-105"
+                  >
+                    Pilih Plan
+                  </Link>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="mt-16"
-          >
-            <div className="dashboard-card p-12 rounded-2xl border-2 border-blue-4/30 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-4/5 to-green-3/5" />
-              <div className="relative z-10">
-                <div className="flex items-center justify-center mb-8">
-                  <div className="w-20 h-20 bg-gradient-to-br from-blue-4 to-green-3 rounded-2xl flex items-center justify-center">
-                    <SparklesIcon className="w-10 h-10 text-white" />
-                  </div>
-                </div>
-
-                <div className="text-center">
-                  <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                    End-to-End Solution
-                  </h3>
-                  <p className="text-xl text-palantir-gray-3 mb-8 max-w-3xl mx-auto">
-                    Dapatkan semua fitur dalam satu platform comprehensive
-                    dengan AI Chatbot advanced dan integrasi seamless antar
-                    modul
-                  </p>
-
-                  <div className="grid md:grid-cols-3 gap-6 mb-8">
-                    {[
-                      "Fraud Detection",
-                      "Sales Forecasting",
-                      "AutoBudgeting",
-                    ].map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center justify-center space-x-2"
-                      >
-                        <CheckIcon className="w-5 h-5 text-green-4" />
-                        <span className="text-white font-medium">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center justify-center space-x-4 mb-8">
-                    <span className="text-4xl font-bold text-white">
-                      Rp 7.500.000
-                    </span>
-                    <span className="text-palantir-gray-4 text-lg">/bulan</span>
-                    <div className="bg-green-3 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      Save 25%
-                    </div>
-                  </div>
-
-                  <Link
-                    href="/subscribe?plan=end-to-end"
-                    className="btn-primary px-10 py-4 rounded-xl font-semibold text-lg inline-flex items-center space-x-2"
-                  >
-                    <span>Get Complete Solution</span>
-                    <ArrowRightIcon className="w-5 h-5" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          {/* End-to-End Solution */}
         </div>
       </section>
 
+      {/* AI Chatbot Section */}
       <section className="relative z-40 py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -382,7 +348,6 @@ export default function LandingPage() {
                     </p>
                   </div>
                 </div>
-
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-green-3 rounded-lg flex items-center justify-center flex-shrink-0">
                     <ChartBarIcon className="w-6 h-6 text-white" />
@@ -397,7 +362,6 @@ export default function LandingPage() {
                     </p>
                   </div>
                 </div>
-
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-orange-3 rounded-lg flex items-center justify-center flex-shrink-0">
                     <CpuChipIcon className="w-6 h-6 text-white" />
@@ -430,7 +394,6 @@ export default function LandingPage() {
                     PointerAI Assistant
                   </span>
                 </div>
-
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
                     <div className="w-8 h-8 bg-blue-4 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -443,7 +406,6 @@ export default function LandingPage() {
                       </p>
                     </div>
                   </div>
-
                   <div className="flex items-start space-x-3 justify-end">
                     <div className="bg-blue-4 rounded-lg p-3 max-w-xs">
                       <p className="text-sm text-white">
@@ -455,7 +417,6 @@ export default function LandingPage() {
                       <span className="text-xs font-bold text-white">You</span>
                     </div>
                   </div>
-
                   <div className="flex items-start space-x-3">
                     <div className="w-8 h-8 bg-blue-4 rounded-lg flex items-center justify-center flex-shrink-0">
                       <CpuChipIcon className="w-4 h-4 text-white" />
@@ -485,6 +446,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* CTA Section */}
       <section className="relative z-40 py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -518,6 +480,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Footer */}
       <footer className="relative z-40 border-t border-palantir-dark-gray-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid md:grid-cols-4 gap-8">
@@ -533,7 +496,6 @@ export default function LandingPage() {
                 technology.
               </p>
             </div>
-
             <div>
               <h3 className="font-semibold text-white mb-4">Product</h3>
               <ul className="space-y-2 text-sm text-palantir-gray-4">
@@ -559,7 +521,6 @@ export default function LandingPage() {
                 </li>
               </ul>
             </div>
-
             <div>
               <h3 className="font-semibold text-white mb-4">Company</h3>
               <ul className="space-y-2 text-sm text-palantir-gray-4">
@@ -585,7 +546,6 @@ export default function LandingPage() {
                 </li>
               </ul>
             </div>
-
             <div>
               <h3 className="font-semibold text-white mb-4">Legal</h3>
               <ul className="space-y-2 text-sm text-palantir-gray-4">
@@ -607,7 +567,6 @@ export default function LandingPage() {
               </ul>
             </div>
           </div>
-
           <div className="border-t border-palantir-dark-gray-3 mt-8 pt-8 text-center">
             <p className="text-palantir-gray-4 text-sm">
               © 2025 PointerAI. All rights reserved. Built with ❤️ for the

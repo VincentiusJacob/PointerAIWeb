@@ -1,12 +1,12 @@
-// app/dashboard/budget/page.tsx - AutoBudgeting Dashboard
+// app/dashboard/budget/page.tsx - FIXED
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import {
   CurrencyDollarIcon,
-  ArrowTrendingUpIcon, // Changed from TrendingUpIcon
-  ArrowTrendingDownIcon, // Changed from TrendingDownIcon
+  ArrowTrendingUpIcon,
+  ArrowTrendingDownIcon,
   ChartPieIcon,
   ArrowPathIcon,
   CalendarIcon,
@@ -22,8 +22,9 @@ import {
   CreditCardIcon,
   BuildingOfficeIcon,
 } from "@heroicons/react/24/outline";
-import { ApexOptions } from "apexcharts"; // Import ApexOptions for type hinting
+import { ApexOptions } from "apexcharts";
 
+// Chart di-load secara dinamis untuk mencegah error di sisi server
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const budgetCategories = [
@@ -124,20 +125,18 @@ const optimizationSuggestions = [
   },
 ];
 
-// Helper object to map color names to full Tailwind class strings
-const colorClassMap: { [key: string]: string } = {
-  blue: "bg-blue-4/20 text-blue-4",
-  green: "bg-green-4/20 text-green-4",
-  orange: "bg-orange-4/20 text-orange-4",
-  red: "bg-red-4/20 text-red-4",
-};
-
-// Helper object for progress bar colors (for simplicity, assuming bg-COLOR-4)
-const progressBarColorMap: { [key: string]: string } = {
-  blue: "bg-blue-4",
-  green: "bg-green-4",
-  orange: "bg-orange-4",
-  red: "bg-red-4",
+// FIX: Objek terstruktur untuk mapping style warna agar aman dari proses Purge Tailwind
+const colorStyles: {
+  [key: string]: { bg: string; text: string; progress: string };
+} = {
+  blue: { bg: "bg-blue-4/20", text: "text-blue-4", progress: "bg-blue-4" },
+  green: { bg: "bg-green-4/20", text: "text-green-4", progress: "bg-green-4" },
+  orange: {
+    bg: "bg-orange-4/20",
+    text: "text-orange-4",
+    progress: "bg-orange-4",
+  },
+  red: { bg: "bg-red-4/20", text: "text-red-4", progress: "bg-red-4" },
 };
 
 export default function AutoBudgetingPage() {
@@ -145,21 +144,13 @@ export default function AutoBudgetingPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showOptimizationModal, setShowOptimizationModal] = useState(false);
 
-  // Budget Overview Chart
+  // Chart options dan series
   const budgetOverviewOptions: ApexOptions = {
-    // Explicitly type as ApexOptions
-    chart: {
-      type: "donut" as "donut", // Explicitly cast
-      height: 350,
-      background: "transparent",
-    },
+    chart: { type: "donut", height: 350, background: "transparent" },
     theme: { mode: "dark" },
     colors: ["#2D72D2", "#0F9960", "#D9822B", "#DB3737"],
     labels: ["Marketing", "Operations", "R&D", "Human Resources"],
-    legend: {
-      position: "bottom",
-      labels: { colors: "#8F99A8" },
-    },
+    legend: { position: "bottom", labels: { colors: "#8F99A8" } },
     plotOptions: {
       pie: {
         donut: {
@@ -176,25 +167,17 @@ export default function AutoBudgetingPage() {
         },
       },
     },
-    dataLabels: {
-      enabled: true,
-      style: { colors: ["#FFFFFF"] },
-    },
+    dataLabels: { enabled: true, style: { colors: ["#FFFFFF"] } },
     tooltip: {
       theme: "dark",
-      y: {
-        formatter: (val: any) => `Rp ${(val / 1000000).toFixed(0)}M`,
-      },
+      y: { formatter: (val) => `Rp ${(val / 1000000).toFixed(0)}M` },
     },
   };
-
   const budgetOverviewSeries = [450, 320, 280, 580];
 
-  // Monthly Spending Trend
   const spendingTrendOptions: ApexOptions = {
-    // Explicitly type as ApexOptions
     chart: {
-      type: "bar" as "bar", // Explicitly cast
+      type: "bar",
       height: 300,
       background: "transparent",
       toolbar: { show: false },
@@ -202,60 +185,31 @@ export default function AutoBudgetingPage() {
     theme: { mode: "dark" },
     colors: ["#2D72D2", "#4C90F0", "#DB3737"],
     plotOptions: {
-      bar: {
-        horizontal: false,
-        columnWidth: "60%",
-        // endingShape: 'rounded' // Removed as it's not a direct property here
-        borderRadius: 4, // Added for rounded corners, if desired
-      },
+      bar: { horizontal: false, columnWidth: "60%", borderRadius: 4 },
     },
     dataLabels: { enabled: false },
-    grid: {
-      borderColor: "#404854",
-      strokeDashArray: 5,
-    },
+    grid: { borderColor: "#404854", strokeDashArray: 5 },
     xaxis: {
       categories: monthlySpending.map((m) => m.month),
       labels: { style: { colors: "#8F99A8" } },
     },
     yaxis: {
-      labels: {
-        style: { colors: "#8F99A8" },
-        formatter: (val: any) => `${val}M`,
-      },
+      labels: { style: { colors: "#8F99A8" }, formatter: (val) => `${val}M` },
     },
-    legend: {
-      labels: { colors: "#8F99A8" },
-    },
-    tooltip: {
-      theme: "dark",
-      y: { formatter: (val: any) => `Rp ${val}M` },
-    },
+    legend: { labels: { colors: "#8F99A8" } },
+    tooltip: { theme: "dark", y: { formatter: (val) => `Rp ${val}M` } },
   };
-
   const spendingTrendSeries = [
-    {
-      name: "Planned",
-      data: monthlySpending.map((m) => m.planned),
-    },
-    {
-      name: "Actual",
-      data: monthlySpending.map((m) => m.actual),
-    },
+    { name: "Planned", data: monthlySpending.map((m) => m.planned) },
+    { name: "Actual", data: monthlySpending.map((m) => m.actual) },
     {
       name: "Variance",
       data: monthlySpending.map((m) => Math.abs(m.variance)),
     },
   ];
 
-  // Cost Optimization Potential
   const optimizationOptions: ApexOptions = {
-    // Explicitly type as ApexOptions
-    chart: {
-      type: "radialBar" as "radialBar", // Explicitly cast
-      height: 280,
-      background: "transparent",
-    },
+    chart: { type: "radialBar", height: 280, background: "transparent" },
     theme: { mode: "dark" },
     colors: ["#0F9960", "#D9822B", "#2D72D2"],
     plotOptions: {
@@ -268,7 +222,6 @@ export default function AutoBudgetingPage() {
     },
     labels: ["Cost Reduction", "Efficiency Gain", "ROI Improvement"],
   };
-
   const optimizationSeries = [87, 73, 94];
 
   const totalAllocated = budgetCategories.reduce(
@@ -506,12 +459,12 @@ export default function AutoBudgetingPage() {
                   <div className="flex items-center space-x-4">
                     <div
                       className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                        colorClassMap[category.color]?.split(" ")[0] || ""
+                        colorStyles[category.color]?.bg || ""
                       }`}
                     >
                       <BuildingOfficeIcon
                         className={`w-6 h-6 ${
-                          colorClassMap[category.color]?.split(" ")[1] || ""
+                          colorStyles[category.color]?.text || ""
                         }`}
                       />
                     </div>
@@ -590,7 +543,7 @@ export default function AutoBudgetingPage() {
                 <div className="w-full bg-palantir-dark-gray-4 rounded-full h-3 mb-4">
                   <div
                     className={`${
-                      progressBarColorMap[category.color] || "bg-gray-4"
+                      colorStyles[category.color]?.progress || "bg-gray-4"
                     } h-3 rounded-full transition-all duration-1000 ease-out`}
                     style={{
                       width: `${(category.spent / category.allocated) * 100}%`,
@@ -623,7 +576,7 @@ export default function AutoBudgetingPage() {
                       <div className="w-full bg-palantir-dark-gray-5 rounded-full h-2">
                         <div
                           className={`${
-                            progressBarColorMap[category.color] || "bg-gray-4"
+                            colorStyles[category.color]?.progress || "bg-gray-4"
                           } h-2 rounded-full`}
                           style={{
                             width: `${(sub.spent / sub.budget) * 100}%`,
