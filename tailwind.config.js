@@ -7,6 +7,17 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: "class",
+  safelist: [
+    // Kelas untuk ikon fitur
+    "from-red-3",
+    "to-red-4",
+    "from-blue-3",
+    "to-blue-4",
+    "from-green-3",
+    "to-green-4",
+    // Pastikan juga teks warnanya terdaftar jika ada class dinamis serupa
+    // 'text-red-4', 'text-blue-4', 'text-green-4', // Sudah ada di kode sebagai static, tapi jaga-jaga
+  ],
   theme: {
     extend: {
       colors: {
@@ -63,17 +74,6 @@ module.exports = {
         sans: ["Inter", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "Consolas", "monospace"],
       },
-      safelist: [
-        // Kelas untuk ikon fitur
-        "from-red-3",
-        "to-red-4",
-        "from-blue-3",
-        "to-blue-4",
-        "from-green-3",
-        "to-green-4",
-        // Pastikan juga teks warnanya terdaftar jika ada class dinamis serupa
-        // 'text-red-4', 'text-blue-4', 'text-green-4', // Sudah ada di kode sebagai static, tapi jaga-jaga
-      ],
       animation: {
         float: "float 6s ease-in-out infinite",
         "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
