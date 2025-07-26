@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
@@ -72,7 +71,6 @@ export default function FraudDetectionPage() {
   const [selectedRiskLevel, setSelectedRiskLevel] = useState("all");
   const [realTimeEnabled, setRealTimeEnabled] = useState(true);
 
-  // Fraud trend chart with realistic restaurant data
   const fraudTrendOptions: ApexOptions = {
     chart: {
       type: "line",
@@ -117,7 +115,6 @@ export default function FraudDetectionPage() {
     { name: "Prevented", data: [2, 4, 3, 6, 5, 3, 4] },
   ];
 
-  // Geographic/Location distribution
   const locationDistributionOptions: ApexOptions = {
     chart: {
       type: "donut",
@@ -151,7 +148,7 @@ export default function FraudDetectionPage() {
       background: "transparent",
     },
     theme: { mode: "dark" },
-    colors: ["#F29D49"], // Medium risk level for restaurant
+    colors: ["#F29D49"],
     plotOptions: {
       radialBar: {
         hollow: { size: "60%" },
@@ -168,11 +165,10 @@ export default function FraudDetectionPage() {
     labels: ["Risk Level"],
   };
 
-  const riskScoreSeries = [35]; // Medium risk level for small restaurant
+  const riskScoreSeries = [35];
 
   return (
     <div className="p-6">
-      {/* Risk Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         {riskMetrics.map((metric, index) => (
           <motion.div
@@ -228,7 +224,6 @@ export default function FraudDetectionPage() {
         ))}
       </div>
 
-      {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -281,7 +276,6 @@ export default function FraudDetectionPage() {
         </motion.div>
       </div>
 
-      {/* Location Distribution & Recent Alerts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -391,7 +385,6 @@ export default function FraudDetectionPage() {
         </motion.div>
       </div>
 
-      {/* AI Analysis */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

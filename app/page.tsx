@@ -20,7 +20,7 @@ const features = [
     title: "Fraud Detection",
     description:
       "Real-time transaction monitoring dengan AI yang mendeteksi pola mencurigakan secara otomatis",
-    price: "Rp 2.500.000",
+    price: "Rp 99.000",
     period: "/bulan",
     color: "red",
   },
@@ -29,7 +29,7 @@ const features = [
     title: "Sales Forecasting",
     description:
       "Prediksi penjualan akurat dengan insights mendalam dan analisis tren comprehensive",
-    price: "Rp 3.200.000",
+    price: "Rp 149.000",
     period: "/bulan",
     color: "blue",
   },
@@ -38,10 +38,9 @@ const features = [
     title: "End-to-End",
     description:
       "Solusi lengkap dengan semua fitur AI, chatbot advanced, dan integrasi seamless",
-    price: "Rp 7.500.000",
+    price: "Rp 249.000",
     period: "/bulan",
     color: "green",
-    badge: "Save 25%",
   },
 ];
 
@@ -84,11 +83,9 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen relative bg-palantir-dark-gray-1">
-      {/* Background Effects */}
       <div className="fixed inset-0 animated-grid opacity-30" />
       <div className="fixed inset-0 bg-gradient-to-br from-blue-1/10 via-transparent to-green-1/10" />
 
-      {/* Floating Particles */}
       {isMounted && (
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
           {[...Array(20)].map((_, i) => (
@@ -118,7 +115,6 @@ export default function LandingPage() {
         </div>
       )}
 
-      {/* Navigation */}
       <nav className="relative z-50 glass-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
@@ -156,7 +152,6 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="relative z-40 pt-20 pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -192,7 +187,6 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
-          {/* Feature Highlights */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -222,7 +216,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features Section */}
       <section id="features" className="relative z-40 py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -272,7 +265,6 @@ export default function LandingPage() {
                     {feature.description}
                   </p>
 
-                  {/* Price Section */}
                   <div className="text-center mb-6">
                     <div className="flex items-center justify-center space-x-2 mb-2">
                       <span className="text-3xl font-bold text-white">
@@ -281,15 +273,9 @@ export default function LandingPage() {
                       <span className="text-palantir-gray-4">
                         {feature.period}
                       </span>
-                      {feature.badge && (
-                        <div className="bg-green-3 text-white px-2 py-1 rounded-full text-xs font-medium">
-                          {feature.badge}
-                        </div>
-                      )}
                     </div>
                   </div>
 
-                  {/* Button */}
                   <Link
                     href={`/subscribe?plan=${feature.title
                       .toLowerCase()
@@ -302,12 +288,9 @@ export default function LandingPage() {
               </motion.div>
             ))}
           </div>
-
-          {/* End-to-End Solution */}
         </div>
       </section>
 
-      {/* AI Chatbot Section */}
       <section className="relative z-40 py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -446,7 +429,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="relative z-40 py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -480,7 +462,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="relative z-40 border-t border-palantir-dark-gray-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid md:grid-cols-4 gap-8">

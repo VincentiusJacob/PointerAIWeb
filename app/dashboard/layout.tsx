@@ -1,7 +1,5 @@
 "use client";
-
 import type React from "react";
-
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -84,26 +82,19 @@ export default function DashboardLayout({
   const router = useRouter();
 
   const handleSignOut = () => {
-    // Clear any stored user data/tokens if needed
-    // localStorage.removeItem('userToken') // uncomment if you store tokens
-
-    // Redirect to landing page
     router.push("/");
   };
 
   return (
     <div className="min-h-screen bg-palantir-dark-gray-1 relative">
-      {/* Enhanced Background Effects */}
       <div className="dashboard-background"></div>
       <div className="floating-orb floating-orb-1"></div>
       <div className="floating-orb floating-orb-2"></div>
       <div className="floating-orb floating-orb-3"></div>
 
-      {/* Existing animated grid - keep this */}
       <div className="fixed inset-0 animated-grid opacity-20" />
       <div className="fixed inset-0 bg-gradient-to-br from-blue-1/5 via-transparent to-green-1/5" />
 
-      {/* Sidebar */}
       <div
         className={`fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -139,7 +130,7 @@ export default function DashboardLayout({
                         ? "bg-blue-4 text-white"
                         : "text-palantir-gray-4 hover:text-white hover:bg-palantir-dark-gray-3"
                     }`}
-                    onClick={() => setSidebarOpen(false)} // Close sidebar on mobile when clicking
+                    onClick={() => setSidebarOpen(false)}
                   >
                     <Icon className="w-5 h-5" />
                     <span className="font-medium">{item.name}</span>
@@ -174,9 +165,7 @@ export default function DashboardLayout({
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="lg:pl-64">
-        {/* Header */}
         <header className="relative z-40 bg-palantir-dark-gray-1 border-b border-palantir-dark-gray-4 px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -276,11 +265,9 @@ export default function DashboardLayout({
           </div>
         </header>
 
-        {/* Page Content */}
         <main className="relative z-30">{children}</main>
       </div>
 
-      {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"

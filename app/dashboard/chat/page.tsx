@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
@@ -24,7 +23,6 @@ import {
 } from "@heroicons/react/24/outline";
 import type { ApexOptions } from "apexcharts";
 
-// Add proper type definitions at the top of the file
 interface BaseChatMessage {
   id: number;
   type: "user" | "ai";
@@ -174,7 +172,6 @@ export default function AIChatPage() {
     setIsTyping(true);
     setMessage("");
 
-    // Simulate AI response
     setTimeout(() => {
       const aiResponse: AIMessage = {
         id: Date.now() + 1,
@@ -210,7 +207,6 @@ export default function AIChatPage() {
     setIsListening(!isListening);
   };
 
-  // Chart configurations
   const salesChartOptions: ApexOptions = {
     chart: {
       type: "area",
@@ -301,12 +297,9 @@ export default function AIChatPage() {
 
   return (
     <div className="h-[calc(100vh-120px)] flex bg-transparent relative">
-      {/* Add subtle overlay for better readability */}
       <div className="absolute inset-0 bg-palantir-dark-gray-1/20 backdrop-blur-sm"></div>
 
-      {/* Sidebar */}
       <div className="w-80 dashboard-sidebar border-r border-palantir-dark-gray-4 flex flex-col relative z-10">
-        {/* Header */}
         <div className="p-6 border-b border-palantir-dark-gray-4">
           <div className="flex items-center space-x-3 mb-4">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-4 to-blue-5 rounded-xl flex items-center justify-center">
@@ -327,7 +320,6 @@ export default function AIChatPage() {
           </div>
         </div>
 
-        {/* Quick Prompts */}
         <div className="flex-1 p-6 overflow-y-auto">
           <h3 className="text-lg font-bold text-white mb-4">
             Pertanyaan Cepat
@@ -373,9 +365,7 @@ export default function AIChatPage() {
         </div>
       </div>
 
-      {/* Main Chat Area */}
       <div className="flex-1 flex flex-col relative z-10">
-        {/* Chat Header */}
         <div className="dashboard-card border-b border-palantir-dark-gray-4 px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -409,7 +399,6 @@ export default function AIChatPage() {
           </div>
         </div>
 
-        {/* Messages */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           <AnimatePresence>
             {currentChatHistory.map((chat) => (
@@ -434,7 +423,6 @@ export default function AIChatPage() {
                         : ""
                     }`}
                   >
-                    {/* Avatar */}
                     <div
                       className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
                         chat.type === "user"
@@ -451,13 +439,11 @@ export default function AIChatPage() {
                       )}
                     </div>
 
-                    {/* Message Content */}
                     <div
                       className={`flex-1 ${
                         chat.type === "user" ? "text-right" : ""
                       }`}
                     >
-                      {/* Message Bubble */}
                       <div
                         className={`inline-block max-w-full ${
                           chat.type === "user"
@@ -470,7 +456,6 @@ export default function AIChatPage() {
                         </p>
                       </div>
 
-                      {/* AI Insights */}
                       {chat.type === "ai" && chat.insights && (
                         <div className="mt-4 bg-palantir-dark-gray-3 border border-palantir-dark-gray-4 rounded-xl p-4">
                           <h4 className="font-medium text-white mb-3 flex items-center space-x-2">
@@ -491,7 +476,6 @@ export default function AIChatPage() {
                         </div>
                       )}
 
-                      {/* Charts */}
                       {chat.type === "ai" && chat.hasChart && (
                         <div className="mt-4 bg-palantir-dark-gray-3 border border-palantir-dark-gray-4 rounded-xl p-4">
                           <div className="flex items-center justify-between mb-3">
@@ -536,7 +520,6 @@ export default function AIChatPage() {
                         </div>
                       )}
 
-                      {/* Action Buttons */}
                       {chat.type === "ai" && chat.actions && (
                         <div className="mt-4 flex flex-wrap gap-2">
                           {chat.actions.map((action, idx) => (
@@ -550,7 +533,6 @@ export default function AIChatPage() {
                         </div>
                       )}
 
-                      {/* Timestamp */}
                       <div
                         className={`mt-2 text-xs text-palantir-gray-4 ${
                           chat.type === "user" ? "text-right" : "text-left"
@@ -564,7 +546,6 @@ export default function AIChatPage() {
               </motion.div>
             ))}
 
-            {/* Typing Indicator */}
             {isTyping && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -595,7 +576,6 @@ export default function AIChatPage() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input Area */}
         <div className="border-t border-palantir-dark-gray-4 p-6 bg-palantir-dark-gray-2">
           <div className="flex items-end space-x-4">
             <div className="flex-1">
@@ -643,7 +623,6 @@ export default function AIChatPage() {
             </motion.button>
           </div>
 
-          {/* Quick Action Buttons */}
           <div className="mt-4 flex flex-wrap gap-2">
             {quickPrompts.slice(0, 3).map((prompt, index) => (
               <button

@@ -1,4 +1,3 @@
-// app/dashboard/budget/page.tsx - FIXED
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -24,7 +23,6 @@ import {
 } from "@heroicons/react/24/outline";
 import { ApexOptions } from "apexcharts";
 
-// Chart di-load secara dinamis untuk mencegah error di sisi server
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const budgetCategories = [
@@ -125,7 +123,6 @@ const optimizationSuggestions = [
   },
 ];
 
-// FIX: Objek terstruktur untuk mapping style warna agar aman dari proses Purge Tailwind
 const colorStyles: {
   [key: string]: { bg: string; text: string; progress: string };
 } = {
@@ -144,7 +141,6 @@ export default function AutoBudgetingPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showOptimizationModal, setShowOptimizationModal] = useState(false);
 
-  // Chart options dan series
   const budgetOverviewOptions: ApexOptions = {
     chart: { type: "donut", height: 350, background: "transparent" },
     theme: { mode: "dark" },

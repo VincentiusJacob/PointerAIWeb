@@ -18,8 +18,8 @@ const plans = [
     name: "Fraud Detection",
     description: "Real-time transaction monitoring dengan AI detection",
     icon: ShieldCheckIcon,
-    monthlyPrice: 2500000,
-    yearlyPrice: 2125000,
+    monthlyPrice: 99000,
+    yearlyPrice: 1100000,
     color: "red",
     features: [
       "Real-time monitoring",
@@ -34,8 +34,8 @@ const plans = [
     name: "Sales Forecasting",
     description: "Advanced analytics untuk prediksi penjualan akurat",
     icon: ChartBarIcon,
-    monthlyPrice: 3200000,
-    yearlyPrice: 2720000,
+    monthlyPrice: 149000,
+    yearlyPrice: 1700000,
     color: "blue",
     popular: true,
     features: [
@@ -51,8 +51,8 @@ const plans = [
     name: "End-to-End Solution",
     description: "Complete business intelligence platform",
     icon: SparklesIcon,
-    monthlyPrice: 7500000,
-    yearlyPrice: 6375000,
+    monthlyPrice: 249000,
+    yearlyPrice: 2900000,
     color: "green",
     badge: "Best Value",
     features: [
@@ -79,11 +79,9 @@ export default function SubscribePage() {
 
   return (
     <div className="min-h-screen bg-palantir-dark-gray-1">
-      {/* Background Effects */}
       <div className="fixed inset-0 animated-grid opacity-20" />
       <div className="fixed inset-0 bg-gradient-to-br from-blue-1/5 via-transparent to-green-1/5" />
 
-      {/* Navigation */}
       <nav className="relative z-50 glass-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
@@ -113,7 +111,6 @@ export default function SubscribePage() {
         </div>
       </nav>
 
-      {/* Header Section */}
       <section className="relative z-40 pt-16 pb-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -131,7 +128,6 @@ export default function SubscribePage() {
               transformasi digital hari ini
             </p>
 
-            {/* Billing Toggle */}
             <div className="flex items-center justify-center space-x-4 mb-12">
               <span
                 className={`text-sm font-medium ${
@@ -171,7 +167,6 @@ export default function SubscribePage() {
         </div>
       </section>
 
-      {/* Pricing Cards */}
       <section className="relative z-40 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -185,7 +180,6 @@ export default function SubscribePage() {
                   plan.popular ? "ring-2 ring-blue-4 scale-105" : ""
                 } hover:scale-105 transition-all duration-300`}
               >
-                {/* Popular Badge */}
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <span className="bg-blue-4 text-white px-4 py-1 rounded-full text-sm font-medium">
@@ -194,7 +188,6 @@ export default function SubscribePage() {
                   </div>
                 )}
 
-                {/* Best Value Badge */}
                 {plan.badge && (
                   <div className="absolute -top-4 right-4">
                     <span className="bg-green-3 text-white px-3 py-1 rounded-full text-xs font-medium">
@@ -203,7 +196,6 @@ export default function SubscribePage() {
                   </div>
                 )}
 
-                {/* Icon */}
                 <div
                   className={`w-16 h-16 bg-gradient-to-br ${
                     plan.color === "red"
@@ -216,7 +208,6 @@ export default function SubscribePage() {
                   <plan.icon className="w-8 h-8 text-white" />
                 </div>
 
-                {/* Plan Info */}
                 <div className="mb-6">
                   <h3 className="text-2xl font-bold text-white mb-2">
                     {plan.name}
@@ -226,7 +217,6 @@ export default function SubscribePage() {
                   </p>
                 </div>
 
-                {/* Pricing */}
                 <div className="mb-8">
                   <div className="flex items-baseline space-x-2">
                     <span className="text-3xl font-bold text-white">
@@ -247,7 +237,6 @@ export default function SubscribePage() {
                   )}
                 </div>
 
-                {/* Features */}
                 <div className="mb-8">
                   <ul className="space-y-3">
                     {plan.features.map((feature, idx) => (
@@ -261,7 +250,6 @@ export default function SubscribePage() {
                   </ul>
                 </div>
 
-                {/* CTA Button */}
                 <Link
                   href={`/checkout?plan=${plan.id}&billing=${
                     isYearly ? "yearly" : "monthly"
@@ -279,7 +267,6 @@ export default function SubscribePage() {
         </div>
       </section>
 
-      {/* Features Comparison */}
       <section className="relative z-40 py-20 border-t border-palantir-dark-gray-3">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -313,7 +300,6 @@ export default function SubscribePage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
       <section className="relative z-40 py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-white text-center mb-12">
@@ -352,7 +338,6 @@ export default function SubscribePage() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="relative z-40 border-t border-palantir-dark-gray-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
